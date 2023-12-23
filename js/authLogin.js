@@ -51,7 +51,7 @@ Login.addEventListener("click", (event) => {
           "user-cred",
           JSON.stringify(userCredential.user)
         );
-        window.location.href = "index.html";
+        window.location.href = "../index.html";
       }
     })
     .catch((error) => {
@@ -75,7 +75,7 @@ register.addEventListener("click", (event) => {
         username: username,
       });
       alert("Registration successfully!!");
-      window.location.href = "login.html";
+      window.location.href = "../auth/auth.html";
     })
     .catch((error) => {
       const errorCode = error.code;
