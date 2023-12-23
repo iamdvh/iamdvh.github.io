@@ -26,6 +26,17 @@ const firebaseConfig = {
   appId: "1:498783498415:web:f7b119118be0b083bea45a",
   measurementId: "G-M2GZC4P9HZ",
 };
+const container = document.getElementById("container");
+const registerBtn = document.getElementById("register");
+const loginBtn = document.getElementById("singin");
+
+registerBtn.addEventListener("click", () => {
+  container.classList.add("active");
+});
+
+loginBtn.addEventListener("click", () => {
+  container.classList.remove("active");
+});
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
