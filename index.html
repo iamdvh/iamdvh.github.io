@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Smart Garden Group 4</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- Sidebar Section -->
+      <aside>
+        <div class="toggle">
+          <div class="logo">
+            <img src="logo.png" />
+            <h2>Group <span class="danger">4</span></h2>
+          </div>
+          <div class="close" id="close-btn">
+            <span class="material-icons-sharp"> close </span>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <a href="#" class="active">
+            <span class="material-icons-sharp"> dashboard </span>
+            <h3>Dashboard</h3>
+          </a>
+          <a href="#">
+            <span class="material-icons-sharp"> person_outline </span>
+            <h3>Users</h3>
+          </a>
+          <a href="#">
+            <span class="material-icons-sharp"> receipt_long </span>
+            <h3>History</h3>
+          </a>
+          <a href="#">
+            <span class="material-icons-sharp"> insights </span>
+            <h3>Analytics</h3>
+          </a>
+          <a href="#">
+            <span class="material-icons-sharp"> report_gmailerrorred </span>
+            <h3>Reports</h3>
+          </a>
+          <a href="#">
+            <span class="material-icons-sharp"> settings </span>
+            <h3>Settings</h3>
+          </a>
+          <a href="#">
+            <span class="material-icons-sharp"> add </span>
+            <h3>New Login</h3>
+          </a>
+          <a style="cursor: pointer" type="button" id="logout">
+            <span class="material-icons-sharp"> logout </span>
+            <h3>Logout</h3>
+          </a>
+        </div>
+      </aside>
+      <!-- End of Sidebar Section -->
+
+      <!-- Main Content -->
+      <main>
+        <h1 style="margin-left: 20px">Dashboard</h1>
+        <!-- Analyses -->
+        <div class="analyse">
+          <div class="sales">
+            <div class="status">
+              <div class="info">
+                <h2>Temperature</h2>
+              </div>
+              <div class="progresss">
+                <svg>
+                  <circle cx="38" cy="38" r="36"></circle>
+                </svg>
+                <div class="percentage">
+                  <p id="tem">0</p>
+                  <p>°</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="visits">
+            <div class="status">
+              <div class="info">
+                <h2>Humidity</h2>
+              </div>
+              <div class="progresss">
+                <svg>
+                  <circle cx="38" cy="38" r="36"></circle>
+                </svg>
+                <div class="percentage">
+                  <p id="hum">0</p>
+                  <p>°</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="searches">
+            <div class="status">
+              <div class="info">
+                <h2>Soil Moisture</h2>
+              </div>
+              <div class="progresss">
+                <svg>
+                  <circle cx="38" cy="38" r="36"></circle>
+                </svg>
+                <div class="percentage">
+                  <p id="soil">0</p>
+                  <p>%</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of Analyses -->
+        <h1 style="margin: 20px">History</h1>
+        <div style="width: 700px">
+          <canvas id="temperatureChart"></canvas>
+        </div>
+        <div style="width: 700px">
+          <canvas id=" humidityChart"></canvas>
+        </div>
+        <div style="width: 700px">
+          <canvas id="sMChart"></canvas>
+        </div>
+
+        <style>
+          .btn-container {
+            display: flex;
+            align-items: flex-start;
+            flex-direction: column;
+            width: 100%;
+            max-width: 600px;
+          }
+
+          .pump {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-top: 20px;
+          }
+          .light {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-top: 20px;
+          }
+
+          /* Khoảng cách giữa các nút */
+          .light {
+            margin-left: 20px;
+          }
+
+          .light > div {
+            margin-top: 10px;
+          }
+
+          .switch-container {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+          }
+
+          .switch-container input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+          }
+
+          .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+          }
+
+          .switch-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+          }
+
+          .switch-container input:checked + .switch-slider {
+            background-color: #42f55a;
+          }
+
+          .switch-container input:focus + .switch-slider {
+            box-shadow: 0 0 1px #42f55a;
+          }
+
+          .switch-container input:checked + .switch-slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+          }
+
+          /* Rounded sliders */
+          .switch-container .switch-slider.round {
+            border-radius: 34px;
+          }
+
+          .switch-container .switch-slider.round:before {
+            border-radius: 50%;
+          }
+        </style>
+      </main>
+      <!-- End of Main Content -->
+
+      <!-- Right Section -->
+      <div class="right-section">
+        <div class="nav">
+          <button id="menu-btn">
+            <span class="material-icons-sharp"> menu </span>
+          </button>
+          <div class="dark-mode">
+            <span class="material-icons-sharp active"> light_mode </span>
+            <span class="material-icons-sharp"> dark_mode </span>
+          </div>
+
+          <div class="profile">
+            <div class="info">
+              <p>Hey, <b id="adminName"></b></p>
+              <small class="text-muted">Admin</small>
+            </div>
+            <div class="profile-photo">
+              <img src="logo.png" />
+            </div>
+          </div>
+        </div>
+        <!-- End of Nav -->
+
+        <div class="user-profile">
+          <div class="logo">
+            <img src="logo.png" />
+            <h2>Group 4</h2>
+            <p>IOT Adminstrator</p>
+          </div>
+        </div>
+
+        <div class="reminders">
+          <div class="user-profile">
+            <div class="btn-container">
+              <h2>Function</h2>
+              <div class="pump">
+                <div>
+                  <h2>Pump</h2>
+                  <label class="switch-container">
+                    <input id="pump" type="checkbox" checked />
+                    <span class="switch-slider round"></span>
+                  </label>
+                </div>
+                <div>
+                  <h2>Auto Pump</h2>
+                  <label class="switch-container">
+                    <input id="autoPump" type="checkbox" checked />
+                    <span class="switch-slider round"></span>
+                  </label>
+                </div>
+              </div>
+              <div class="light">
+                <div>
+                  <h2>Light</h2>
+                  <label class="switch-container">
+                    <input id="light" type="checkbox" checked />
+                    <span class="switch-slider round"></span>
+                  </label>
+                </div>
+                <!-- <div>
+                  <h2>Auto Light</h2>
+                  <label class="switch-container">
+                    <input id="AutoLight" type="checkbox" checked />
+                    <span class="switch-slider round"></span>
+                  </label>
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <script src="orders.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const labels = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+      ];
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: "My First Dataset",
+            data: [65, 59, 80, 81, 56, 55, 40], // Dữ liệu số lượng tiền, bạn có thể thay đổi giá trị này.
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.2)",
+              "rgba(255, 159, 64, 0.2)",
+              "rgba(255, 205, 86, 0.2)",
+              "rgba(75, 192, 192, 0.2)",
+              "rgba(54, 162, 235, 0.2)",
+              "rgba(153, 102, 255, 0.2)",
+              "rgba(201, 203, 207, 0.2)",
+            ],
+            borderColor: [
+              "rgb(255, 99, 132)",
+              "rgb(255, 159, 64)",
+              "rgb(255, 205, 86)",
+              "rgb(75, 192, 192)",
+              "rgb(54, 162, 235)",
+              "rgb(153, 102, 255)",
+              "rgb(201, 203, 207)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const config = {
+        type: "bar",
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      };
+
+      // var myChart = new Chart(document.getElementById("myChart"), config);
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.3.0/firebase-auth.js"></script>
+    <script type="module" src="index.js"></script>
+  </body>
+</html>
